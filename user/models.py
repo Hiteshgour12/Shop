@@ -52,7 +52,6 @@ class User(AbstractBaseUser):
     )
     name = models.CharField(max_length=20,blank=False,null=False)
     mobile_number = models.CharField(max_length=17,blank=False)
-    created_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(choices=DESIG, max_length=200, default='user')
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -95,8 +94,8 @@ class User(AbstractBaseUser):
 
 class UserProfiles(models.Model):
     user_id = models.ForeignKey(User, on_delete= models.CASCADE)
-    avatar = models.ImageField(upload_to='images/avatar/')
-    bio = models.CharField(max_length=220, null=True)
+    avatar = models.ImageField(upload_to='images/avatar/', default='images/avatar/avtar.jpg')
+    bio = models.CharField(max_length=220, null=True, default='Intraduce your self......')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -109,8 +108,8 @@ class UserProfiles(models.Model):
     
 class UserAddress(models.Model):
     user_id = models.ForeignKey(User, on_delete= models.CASCADE)
-    aparment = models.CharField(max_length=220, null=True)
-    street  = models.CharField(max_length=150, null=True)
+    aparment = models.CharField(max_length=220, null=True, default='H.No.')
+    street  = models.CharField(max_length=150, null=True,default='Street/Landmark')
     postal_code = models.CharField(max_length=20, null=True)
     city = models.CharField(max_length=20, null=True)
     country = models.CharField(max_length=20, null=True)

@@ -9,14 +9,14 @@ class UserAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 admin.site.register(User,UserAdmin)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('aparment','id','street','user_id','postal_code','city','country','created_at')
+    list_display = ('user_id','aparment','id','street','postal_code','city','country','created_at')
     list_filter = ('city','country','postal_code',)
     search_fields = ['aparment','street','postal_code','city','country','id',]
     ordering = ('-created_at',)
 admin.site.register(UserAddress,AddressAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('bio','id','avatar','user_id','created_at')
+    list_display = ('user_id','bio','id','avatar','created_at')
     list_filter = ("bio",)
     search_fields = ['bio','user_id','id',]
     ordering = ('-created_at',)
