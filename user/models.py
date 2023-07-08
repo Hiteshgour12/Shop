@@ -115,3 +115,8 @@ class UserAddress(models.Model):
     city = models.CharField(max_length=20, null=True)
     country = models.CharField(max_length=20, null=True)
     default = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.aparment
