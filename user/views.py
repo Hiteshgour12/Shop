@@ -27,5 +27,35 @@ class UserLoginView(generics.GenericAPIView):
         # print(user1)
         serializer = self.serializer_class(data=userdata)
         valid = serializer.is_valid(raise_exception=True)
-       
+        # super().save(last_login=True)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class UserListView(generics.GenericAPIView):
+    serializer_class = UserListserializer
+    pagination_class = (IsAuthenticated,)
+
+    def get(self,request):
+        user = request.user
+        if user.role != 'admin':
+            response = {
+                'success': False,
+                'status_code': status.HTTP_403_FORBIDDEN,
+                'message': 'You are not authorized to perform this action'
+            }
+            return Response(response, status.HTTP_403_FORBIDDEN)
+        else:
+            users = User.objects.filter(role='user').order_by('-id')
+            serializer = self.serializer_class(users, many=True)
+            count=0
+            for i in users:
+                 count +=1
+            response = {
+                'total user': count,
+                'success': True,
+                'status_code': status.HTTP_200_OK,
+                'message': 'Successfully fetched users',
+                'users': serializer.data
+
+            }
+            return Response(response, status=status.HTTP_200_OK)

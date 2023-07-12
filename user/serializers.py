@@ -39,7 +39,7 @@ class NewUserSerializer(serializers.ModelSerializer):
     
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=255)
+    email = serializers.EmailField(max_length=255,write_only=True)
     password = serializers.CharField(max_length=68, write_only=True)
     tokens = serializers.SerializerMethodField()
     role = serializers.CharField(read_only=True)
@@ -84,3 +84,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'tokens': user.tokens,
             'role':user.role
         }
+    
+class UserListserializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','name','email','mobile_number','role','is_active','update_at','created_at']
